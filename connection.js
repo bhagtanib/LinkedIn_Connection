@@ -2,15 +2,15 @@ console.log("Chrome Extension idle");
 
 async function waitForOneSecond() {
   return new Promise((resolve) => {
-    setTimeout(resolve, 1000);
+    setTimeout(resolve, 2000);
   });
 }
 
 async function run() {
-  // name company class = ph5 pb5
-  // button class = pv-top-card-v2
+
   var message = getMessage();
-  var name = getName();
+  var name = getName().trim();
+  console.log("name:", name )
   var pending = document.querySelector(
     `[aria-label="Pending, click to withdraw invitation sent to ${name}"]`
   );
@@ -26,11 +26,11 @@ async function run() {
 
   var note = document.querySelector(`[aria-label="Add a note"]`);
   note.click();
+  await waitForOneSecond();
 
   var textArea = document.getElementById("custom-message");
+  console.log("text area: ", textArea)
   textArea.value = message;
- 
-  addInput()
   await waitForOneSecond()
 
   var send = document.querySelector(`[aria-label="Send now"]`);
@@ -39,44 +39,6 @@ async function run() {
   send.click();
 }
 
-// function addInput() {
-//   const inputElement = document.createElement("input");
-//   inputElement.type = "text";
-//   document.body.appendChild(inputElement);
-//   console.log("Added")
-//   inputElement.click();
-// }
-// async function sendMessage(name, message) {
-//   var element = document.querySelector(
-//     `[aria-label="Invite ${name} to connect"]`
-//   );
-//   element.click();
-//   await waitForOneSecond();
-//   var note = document.querySelector(`[aria-label="Add a note"]`);
-//   note.click();
-//   var textArea = document.getElementById("custom-message");
-//   console.log("We are heree");
-//   textArea.value = message;
-//   textArea.dispatchEvent(new Event("input", { bubbles: true }));
-//   if (textArea) {
-//     console.log("no message");
-//   }
-//   var send = document.querySelector(`[aria-label="Send now"]`);
-//   console.log("Opening console");
-//   window
-//     .open("", "_blank")
-//     .document.write('<script>document.title="Console";</script>');
-
-//   if (send) {
-//     console.log("sent");
-//     send.click();
-//     send.click();
-//     close();
-//   }
-
-//   // console.log("note: ", note)
-//   // console.log(element)
-// }
 function getName() {
   return document.getElementsByClassName("pv-text-details__left-panel")[0]
     .children[0].children[0].textContent;
